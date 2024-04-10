@@ -1,0 +1,30 @@
+{
+  "name": "0g",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demondvn/faucet-0g-ai.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/demondvn/faucet-0g-ai/issues"
+  },
+  "homepage": "https://github.com/demondvn/faucet-0g-ai#readme",
+  "dependencies": {
+    "2captcha": "^3.0.5-2",
+    "axios": "^1.6.8",
+    "https-proxy-agent": "^7.0.4",
+    "node-cron": "^3.0.3",
+    "web3": "^1.5.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.12.6"
+  }
+}
