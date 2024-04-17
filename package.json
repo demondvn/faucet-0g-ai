@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/demondvn/faucet-0g-ai#readme",
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "2captcha": "^3.0.5-2",
     "axios": "^1.6.8",
     "https-proxy-agent": "^7.0.4",

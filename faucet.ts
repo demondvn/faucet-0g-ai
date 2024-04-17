@@ -3,10 +3,11 @@ import Web3 from 'web3';
 import { Solver } from '2captcha';
 import fs from 'fs-extra';
 import HttpsProxyAgent from 'https-proxy-agent';
+import { faker } from '@faker-js/faker';
 
 const API_KEY = process.env.CAPTCHA_API_KEY+"";
 const SITE_KEY = '06ee6b5b-ef03-4491-b8ea-01fb5a80256f';
-const PROXY_URL = 'https://poeai.click/proxy.php/v2/?request=getproxies&protocol=socks4&timeout=1000';
+// const PROXY_URL = 'https://poeai.click/proxy.php/v2/?request=getproxies&protocol=socks4&timeout=1000';
 const FAUCET_API_URL = 'https://faucet.0g.ai/api/faucet';
 const WALLET_FILE_PATH = '0g.csv';
 
@@ -14,8 +15,9 @@ export let _proxy: string[] = [];
 
 export async function fetchProxies(): Promise<void> {
   try {
-    const response = await axios.get(PROXY_URL);
-    const proxies = response.data.split('\n');
+    // const response = await axios.get(PROXY_URL);
+    const data = fs.readFileSync('proxy.txt', 'utf8');
+    const proxies = data.split('\n');
     _proxy.push(...proxies);
   } catch (error) {
     console.error('Failed to fetch proxies:', error);
@@ -54,7 +56,16 @@ async function createWallet(): Promise<{ address: string; privateKey: string }> 
 
 async function postToFaucet(address: string, hcaptchaToken: string, proxy: string): Promise<boolean> {
   try {
-    const agent =new HttpsProxyAgent.HttpsProxyAgent(`socks4://${proxy}`);
+    const agent =new HttpsProxyAgent.HttpsProxyAgent(proxy,{
+      keepAlive: true,
+      keepAliveMsecs: 1000,
+      maxSockets: 256,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      timeout: 60000,
+      rejectUnauthorized: false
+    
+    });
     const response = await axios.post(
       FAUCET_API_URL,
       {
@@ -62,10 +73,12 @@ async function postToFaucet(address: string, hcaptchaToken: string, proxy: strin
         hcaptchaToken,
       },
       {
-        proxy: {
-          host: proxy.split(':')[0],
-          port: parseInt(proxy.split(':')[1]),
-        },
+        httpAgent: agent,
+        headers: {
+          'Content-Type': 'application/json',
+          'User-Agent': faker.internet.userAgent()
+        
+        }
       }
     );
     return response.status === 200;
