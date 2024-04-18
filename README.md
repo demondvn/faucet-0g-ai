@@ -17,7 +17,8 @@ start
 Testing
 To run the tests, use the following command:
 ```
-test
+npm i -g ts-node -y
+ts-node faucet.ts
 ```
 Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
