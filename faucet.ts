@@ -1,9 +1,13 @@
+#!/usr/bin/env node
 import axios from 'axios';
 import Web3 from 'web3';
 import { Solver } from '2captcha';
 import fs from 'fs-extra';
-import HttpsProxyAgent from 'https-proxy-agent';
+import {HttpsProxyAgent} from 'https-proxy-agent';
 import { faker } from '@faker-js/faker';
+require('dotenv').config();
+import { SocksProxyAgent } from 'socks-proxy-agent';
+
 
 const API_KEY = process.env.CAPTCHA_API_KEY + "";
 const SITE_KEY = '06ee6b5b-ef03-4491-b8ea-01fb5a80256f';
@@ -48,11 +52,15 @@ async function createWallet(): Promise<{ address: string; privateKey: string }> 
 
 async function postToFaucet(address: string, hcaptchaToken: string, proxy: string): Promise<boolean> {
   try {
-    const proxyAuth = proxy.split('@')[0];
-    let proxyHost = proxy.split('@')[1];
-    proxyHost = proxyHost.startsWith('http') ? proxyHost : 'http://' + proxyHost;
-    console.log('Posting to faucet:', address, proxyAuth, proxyHost);
-    const agent = new HttpsProxyAgent.HttpsProxyAgent(`${proxyAuth}@${proxyHost}`, {
+    // const proxyAuth = proxy.split('@')[0];
+    // let proxyHost = proxy.split('@')[1];
+    // proxyHost = proxyHost.startsWith('http') ? proxyHost : 'http://' + proxyHost;
+    console.log('Posting to faucet:', address, proxy);
+    // const agent = new HttpsProxyAgent(`${proxy}`, {
+    //   keepAlive: true,
+      
+    // });
+    const agent = new SocksProxyAgent(`socks5://${proxy}`,{
       keepAlive: true,
     });
     const response = await axios.post(

@@ -20,8 +20,10 @@
     "@faker-js/faker": "^8.4.1",
     "2captcha": "^3.0.5-2",
     "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
     "https-proxy-agent": "^7.0.4",
     "node-cron": "^3.0.3",
+    "socks-proxy-agent": "^8.0.3",
     "web3": "^1.5.2"
   },
   "devDependencies": {
