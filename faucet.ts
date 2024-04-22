@@ -6,7 +6,7 @@ import fs from 'fs-extra';
 import {HttpsProxyAgent} from 'https-proxy-agent';
 import { faker } from '@faker-js/faker';
 require('dotenv').config();
-import { SocksProxyAgent } from 'socks-proxy-agent';
+// import { SocksProxyAgent } from 'socks-proxy-agent';
 
 
 const API_KEY = process.env.CAPTCHA_API_KEY + "";
@@ -52,17 +52,19 @@ async function createWallet(): Promise<{ address: string; privateKey: string }> 
 
 async function postToFaucet(address: string, hcaptchaToken: string, proxy: string): Promise<boolean> {
   try {
-    // const proxyAuth = proxy.split('@')[0];
-    // let proxyHost = proxy.split('@')[1];
+    const proxies = proxy.split(':');
+    if(proxies . length != 4) return Promise.reject( `Invalid proxy format: ${proxy}`)
+      const proxyHost = proxies[0]+':'+proxies[1]
+    const proxyAuth = proxies[2]+':'+proxies[3]
     // proxyHost = proxyHost.startsWith('http') ? proxyHost : 'http://' + proxyHost;
     console.log('Posting to faucet:', address, proxy);
-    // const agent = new HttpsProxyAgent(`${proxy}`, {
-    //   keepAlive: true,
+    const agent = new HttpsProxyAgent(`http://${proxyAuth}@${proxyHost}`, {
+      keepAlive: false,
       
-    // });
-    const agent = new SocksProxyAgent(`socks5://${proxy}`,{
-      keepAlive: true,
     });
+    // const agent = new SocksProxyAgent(`socks5://${proxy}`,{
+    //   keepAlive: true,
+    // });
     const response = await axios.post(
       FAUCET_API_URL,
       {

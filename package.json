@@ -24,6 +24,7 @@
     "https-proxy-agent": "^7.0.4",
     "node-cron": "^3.0.3",
     "socks-proxy-agent": "^8.0.3",
+    "ts-node": "^10.9.2",
     "web3": "^1.5.2"
   },
   "devDependencies": {
