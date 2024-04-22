@@ -58,10 +58,7 @@ async function postToFaucet(address: string, hcaptchaToken: string, proxy: strin
     const proxyAuth = proxies[2]+':'+proxies[3]
     // proxyHost = proxyHost.startsWith('http') ? proxyHost : 'http://' + proxyHost;
     console.log('Posting to faucet:', address, proxy);
-    const agent = new HttpsProxyAgent(`http://${proxyAuth}@${proxyHost}`, {
-      keepAlive: false,
-      
-    });
+    const agent = new HttpsProxyAgent(`socks5://${proxyAuth}@${proxyHost}`);
     // const agent = new SocksProxyAgent(`socks5://${proxy}`,{
     //   keepAlive: true,
     // });
