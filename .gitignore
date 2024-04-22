@@ -3,6 +3,6 @@ node_modules/
 dist/
 *.log
 .DS_Store
-proxy.txt
+./proxy.txt
 .env
 proxy.txt
