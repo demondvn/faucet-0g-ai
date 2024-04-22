@@ -72,7 +72,7 @@ async function postToFaucet(address: string, hcaptchaToken: string, proxy: strin
         hcaptchaToken,
       },
       {
-        httpAgent: agent,
+        httpsAgent: agent,
         headers: {
           'Content-Type': 'application/json',
           'User-Agent': faker.internet.userAgent()
