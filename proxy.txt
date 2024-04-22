@@ -1,1 +1,1 @@
-u5er:Password@localhost:1080
+localhost:1080:u5er:Password
