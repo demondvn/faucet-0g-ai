@@ -36,7 +36,7 @@ export async function fetchProxies(): Promise<void> {
 async function solveCaptcha(): Promise<string> {
   const solver = new Solver(API_KEY);
   const result = await solver.hcaptcha(SITE_KEY, 'https://faucet.0g.ai');
-  console.log('Captcha solved:', result.data);
+  // console.log('Captcha solved:', result.data);
   return result.data;
 }
 
